@@ -1,40 +1,7 @@
-function out=prepca(isGallery,imageSet,gallery,category_num,img_num)
+function Y=Prepca(image)
 %Eliminating the background, Normalize the size of images, 
 %and Locate the plankton
 
-%imageSet :the sets of images to be processed
-%isGallery :distinguishes whether this function is processing gallery or
-%           other image sets.
-%           if this is true,the function is for gallery preprocessing
-%           before pca,if not,it is for other image sets processing
-    if(isGallery)
-        galleryproc=cell(category_num,size(gallery,2));
-        for k=1:category_num
-            for m=1:img_num(k)
-                Image=gallery{k,m};
-%                 if(size(Image,1)==0)
-%                     break;
-%                 else
-                    Image=Prepca(Image);
-                    galleryproc{k,m}=Image;
-%                 end
-            end
-        end
-        save('galleryproc','galleryproc','category_num','path','img_num');
-        out=galleryproc;
-    else
-        [rownum,columnnum]=size(imageSet);
-        num=rownum*columnnum;
-        testMat=cell(num,1);
-        for k=1:num
-            Image=Prepca(imageSet{k});
-            testMat{k}=Image;
-        end
-        save testMat testMat;
-        out=testMat;
-    end
-end
-function Y=Prepca(image)
     X=edge(image,'sobel');%edge detecting
     [x,y]=find(X==1);
     xmin=min(x);
