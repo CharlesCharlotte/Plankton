@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 function Y=Prepca(image,Size)
-=======
-function Y=Prepca(image)
->>>>>>> f5e1b3ebfe7fa4dd3c5a101610b876755401349a
 %Eliminating the background, Normalize the size of images, 
 %and Locate the plankton
 
@@ -25,19 +21,15 @@ function Y=Prepca(image)
     end
     ang=ang/pi*180;
     Y=imrotate(image,ang,'bicubic');  
-<<<<<<< HEAD
     Test=ones(size(image));
     Test=imrotate(Test,ang);
     idx=~Test;
-=======
->>>>>>> f5e1b3ebfe7fa4dd3c5a101610b876755401349a
     X=imrotate(X,ang);
     [x,y]=find(X==1);
     xmin=min(x);
     xmax=max(x);
     ymin=min(y);
     ymax=max(y);
-<<<<<<< HEAD
     xu=max(xmin-3,1);
     xd=min(xmax+3,size(Y,1));
     yl=max(ymin-3,1);
@@ -49,16 +41,3 @@ function Y=Prepca(image)
     Y=imresize(Y,[Size,Size]);
     Y=reshape(Y,Size*Size,1);
 end
-           
-=======
-    xu=max(xmin-2,1);
-    xd=min(xmax+2,size(Y,1));
-    yl=max(ymin-2,1);
-    yr=min(ymax+2,size(Y,2));
-    Y=Y(xu:xd,yl:yr);
-    Y=imresize(Y,[256,256]);
-    Y=reshape(Y,256*256,1);
-end
-            
-%to be finished :modify the color of background
->>>>>>> f5e1b3ebfe7fa4dd3c5a101610b876755401349a

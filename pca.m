@@ -1,25 +1,24 @@
-function [ave,zeroMeanSpace,pcaEigVals,pcaEigVecs,subEigVecs]=pca(trainMat, subDim) 
-    ave = mean(double(trainMat'))';
-    zeroMeanSpace = zeros(size(trainMat));
-    for k = 1:subDim
-        zeroMeanSpace(:,k) = double(trainMat(:,k))-ave;
+function [Ave,ZeroMeanSpace,PcaEigVals,SubEigVecs]=Pca(trainMat, subDim) 
+    Ave = mean(double(trainMat'))';
+    ZeroMeanSpace = zeros(size(trainMat));
+    for k = 1:size(trainMat,2)
+        ZeroMeanSpace(:,k) = double(trainMat(:,k))-Ave;
     end
-    L = zeroMeanSpace' * zeroMeanSpace;
+    L = ZeroMeanSpace' * ZeroMeanSpace;
     [eigVecs, eigVals] = eig(L);
     eigVals = diag(eigVals);
     [~, index] = sort(eigVals);
     index = flipud(index);
-    pcaEigVals = zeros(size(eigVals));
-    pcaEigVecs = zeros(size(eigVecs));
+    PcaEigVals = zeros(size(eigVals));
+    PcaEigVecs = zeros(size(eigVecs));
     for k = 1 : length(eigVals)
-        pcaEigVals(k) = eigVals(index(k));
-        pcaEigVecs(:,k) = eigVecs(:,index(k));
+        PcaEigVals(k) = eigVals(index(k));
+        PcaEigVecs(:,k) = eigVecs(:,index(k));
     end
-    %pcaEigVals = pcaEigVals/(subDim);
-    pcaEigVals = pcaEigVals(1:subDim);
-    pcaEigVecs = zeroMeanSpace * pcaEigVecs;
+    PcaEigVals = PcaEigVals(1:subDim);
+    PcaEigVecs = ZeroMeanSpace * PcaEigVecs;
     for k = 1:subDim
-        pcaEigVecs(:,k) = pcaEigVecs(:,k) / norm(pcaEigVecs(:,k));
+        PcaEigVecs(:,k) = PcaEigVecs(:,k) / norm(PcaEigVecs(:,k));
     end
-    subEigVecs = pcaEigVecs(:,1:subDim);
+    SubEigVecs = PcaEigVecs(:,1:subDim);
 end
